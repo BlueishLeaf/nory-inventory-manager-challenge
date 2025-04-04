@@ -7,7 +7,7 @@
 ### Running in Production Mode
 1. Open up a terminal.
 2. Change directory into the repository's root ("nory-inventory-manager-challenge").
-3. Open up the "**compose.yaml**" file and look for the **ACTIVE_LOCATION_ID** env variable defined in the backend container. Set this to whatever location ID you want (from the available data) to run the app/load data for. It is set to "1" by default. 
+3. Open up the "**compose.yaml**" file and look for the **ACTIVE_LOCATION_ID** env variable defined in the backend container. Set this to whatever location ID you want (from the available data) to run the app/load data for. It is set to "1" by default. Also make sure you do not have anything currently running on port 80 or 5432 (for Postgres).
 4. Run "**docker compose up**" to spin up the containers and wait for them to start up.
 5. The data for your chosen location should be loaded now, but note that if you wish to change the location after spinning up the containers, you will need to shut down the app, delete the storage volume that Postgres is using, then start the containers back up. This is because the data migration on start-up won't run if there is any existing data.
 6. Access the application @ http://localhost
