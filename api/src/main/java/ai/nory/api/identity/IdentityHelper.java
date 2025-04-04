@@ -7,8 +7,6 @@ import ai.nory.api.dto.StaffMemberDto;
 import ai.nory.api.service.LocationService;
 import ai.nory.api.service.StaffMemberService;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
@@ -20,10 +18,8 @@ import java.util.Set;
 public class IdentityHelper {
     private final LocationService locationService;
     private final StaffMemberService staffMemberService;
-    private final Logger log = LoggerFactory.getLogger(IdentityHelper.class);
 
     public StaffIdentity validateStaffIdentity(IdentityHeaders identityHeaders, Set<String> allowedRoles) {
-        log.info("Validating staff identity: {}", identityHeaders.toString());
         if (identityHeaders.getStaffMemberId() == null || identityHeaders.getLocationId() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing required headers: location_id, staff_member_id");
         }
