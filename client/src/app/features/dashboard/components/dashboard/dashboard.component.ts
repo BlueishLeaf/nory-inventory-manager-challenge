@@ -28,6 +28,11 @@ export class DashboardComponent implements OnInit {
       route: '/stocktaking/view',
       displayText: 'View Inventory',
       allowedRoles: [RoleConstants.ROLE_ALL]
+    },
+    {
+      route: '/reporting',
+      displayText: 'View Reporting',
+      allowedRoles: [RoleConstants.ROLE_MANAGER]
     }
   ];
 

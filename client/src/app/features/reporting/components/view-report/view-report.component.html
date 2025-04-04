@@ -1,0 +1,45 @@
+<div class="row justify-content-center mt-3">
+  <h2 class="text-center mb-3">Monthly Audit Logs</h2>
+  @if (inventoryAuditLogs.length > 0) {
+    <div class="col-lg-12">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Staff Member</th>
+          <th scope="col">Ingredient Name</th>
+          <th scope="col">Qty Change Type</th>
+          <th scope="col">Qty Before</th>
+          <th scope="col">Qty After</th>
+          <th scope="col">Qty Change Amount</th>
+          <th scope="col">Qty Change Cost</th>
+          <th scope="col">Timestamp (UTC)</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (auditLog of inventoryAuditLogs | slice: (page - 1) * pageSize : page * pageSize; track auditLog) {
+            <tr>
+              <td>{{auditLog.staffMemberName}}</td>
+              <td>{{auditLog.ingredientName}}</td>
+              <td>{{auditLog.quantityChangeType}}</td>
+              <td>{{auditLog.quantityBefore}}</td>
+              <td>{{auditLog.quantityAfter}}</td>
+              <td>{{auditLog.quantityChangeAmount}}</td>
+              <td>{{auditLog.quantityChangeCost | currency: 'EUR'}}</td>
+              <td>{{auditLog.createdAt | date: 'medium'}}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      <ngb-pagination [(page)]="page"
+                      [pageSize]="pageSize"
+                      [maxSize]="maxDisplayPages"
+                      [ellipses]="true"
+                      [rotate]="true"
+                      [boundaryLinks]="true"
+                      [collectionSize]="inventoryAuditLogs.length"
+      />
+    </div>
+  } @else {
+    <h3 class="text-center mb-3">No audit logs to display</h3>
+  }
+</div>
