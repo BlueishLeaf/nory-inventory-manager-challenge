@@ -1,6 +1,6 @@
 package ai.nory.api.dto.stocktake;
 
-import ai.nory.api.dto.InventoryAuditLogDto;
+import ai.nory.api.dto.report.InventoryAuditLogDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package ai.nory.api.dto.ingredient;
 
-import ai.nory.api.dto.InventoryAuditLogDto;
+import ai.nory.api.dto.report.InventoryAuditLogDto;
 import ai.nory.api.dto.LocationDto;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package ai.nory.api.service;
 
-import ai.nory.api.dto.InventoryAuditLogDto;
+import ai.nory.api.dto.report.InventoryAuditLogDto;
 import ai.nory.api.dto.ingredient.ChangeQuantityCommand;
 import ai.nory.api.dto.ingredient.LocationIngredientDto;
 import ai.nory.api.entity.LocationIngredient;

@@ -1,6 +1,6 @@
 package ai.nory.api.mapper;
 
-import ai.nory.api.dto.InventoryAuditLogDto;
+import ai.nory.api.dto.report.InventoryAuditLogDto;
 import ai.nory.api.entity.InventoryAuditLog;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

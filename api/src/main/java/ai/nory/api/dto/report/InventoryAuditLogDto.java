@@ -1,4 +1,4 @@
-package ai.nory.api.dto;
+package ai.nory.api.dto.report;
 
 import ai.nory.api.enumerator.QuantityChangeType;
 import lombok.AllArgsConstructor;
