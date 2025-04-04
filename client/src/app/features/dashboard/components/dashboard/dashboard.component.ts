@@ -33,6 +33,11 @@ export class DashboardComponent implements OnInit {
       route: '/reporting',
       displayText: 'View Reporting',
       allowedRoles: [RoleConstants.ROLE_MANAGER]
+    },
+    {
+      route: '/deliveries',
+      displayText: 'Accept a Delivery',
+      allowedRoles: [RoleConstants.ROLE_MANAGER, RoleConstants.ROLE_BACK_HOUSE, RoleConstants.ROLE_CHEF]
     }
   ];
 

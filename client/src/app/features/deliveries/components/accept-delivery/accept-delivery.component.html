@@ -1,0 +1,99 @@
+<div class="row justify-content-center mt-3">
+  <h2 class="text-center mb-3">Accept new Delivery</h2>
+
+  <div class="col-md-6 col-lg-5">
+    <form [formGroup]="addIngredientForm" (ngSubmit)="addIngredientToDelivery()">
+      <div class="mb-3">
+
+        <!-- Alert for success -->
+        @if (successMessage) {
+          <ngb-alert [type]="'success'" (closed)="successMessage = ''">
+            {{ successMessage }}
+          </ngb-alert>
+        }
+
+        <!-- Alert for errors -->
+        @if (errorMessage) {
+          <ngb-alert [type]="'danger'" (closed)="errorMessage = ''">
+            {{ errorMessage }}
+          </ngb-alert>
+        }
+
+        <label for="ingredientInput" class="form-label">Search for an Ingredient</label>
+        <input
+          id="ingredientInput"
+          type="text"
+          class="form-control"
+          placeholder="Start typing the name of an ingredient"
+          [ngClass]="{'is-invalid': addIngredientForm.controls.selectedIngredient.invalid && (addIngredientForm.controls.selectedIngredient.dirty || addIngredientForm.controls.selectedIngredient.touched)}"
+          [formControl]="addIngredientForm.controls.selectedIngredient"
+          [ngbTypeahead]="search"
+          [inputFormatter]="formatter"
+          [resultFormatter]="formatter"
+          [editable]="false"
+        />
+        <div *ngIf="addIngredientForm.controls.selectedIngredient.invalid && (addIngredientForm.controls.selectedIngredient.dirty || addIngredientForm.controls.selectedIngredient.touched)" class="invalid-feedback">
+          <div *ngIf="addIngredientForm.controls.selectedIngredient.errors?.['required']">You must select an ingredient</div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="quantityInput" class="form-label">Quantity Delivered</label>
+        <input
+          type="number"
+          class="form-control"
+          id="quantityInput"
+          placeholder="0"
+          [ngClass]="{'is-invalid': addIngredientForm.controls.quantityDelivered.invalid && (addIngredientForm.controls.quantityDelivered.dirty || addIngredientForm.controls.quantityDelivered.touched)}"
+          [formControl]="addIngredientForm.controls.quantityDelivered"
+        />
+        <div *ngIf="addIngredientForm.controls.quantityDelivered && (addIngredientForm.controls.quantityDelivered.dirty || addIngredientForm.controls.quantityDelivered.touched)" class="invalid-feedback">
+          <div *ngIf="addIngredientForm.controls.quantityDelivered.errors?.['required']">Quantity delivered is required</div>
+        </div>
+      </div>
+      <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-primary" [disabled]="addIngredientForm.invalid">Add to Delivery</button>
+      </div>
+    </form>
+
+    <hr>
+
+    @if (acceptDeliveryForm.valid) {
+      <h3 class="text-center">Items from this delivery</h3>
+      <form [formGroup]="acceptDeliveryForm" (ngSubmit)="acceptDelivery()">
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">Ingredient</th>
+            <th scope="col">Unit</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+            @for (deliveredItem of acceptDeliveryForm.controls.deliveredItems.value; track $index) {
+              <tr>
+                <td>{{deliveredItem.locationIngredient.ingredient.name}}</td>
+                <td>{{deliveredItem.locationIngredient.ingredient.unit}}</td>
+                <td>{{deliveredItem.quantityDelivered}}</td>
+                <td><button type="button" class="btn btn-outline-danger" (click)="removeDeliveredItem(deliveredItem)">Remove</button></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+
+        <!-- Form submit button -->
+        <div class="d-grid gap-2">
+          <button
+            type="submit"
+            class="btn btn-success"
+            [disabled]="acceptDeliveryForm.invalid || formSubmitting">
+            <span *ngIf="formSubmitting" class="spinner-border spinner-border-sm me-2"></span>
+            {{ formSubmitting ? 'Accepting Delivery...' : 'Accept Delivery' }}
+          </button>
+        </div>
+      </form>
+    } @else {
+      <h3 class="text-center">Add items to accept this Delivery</h3>
+    }
+  </div>
+</div>
