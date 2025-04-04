@@ -1,7 +1,9 @@
 import { Routes } from '@angular/router';
 import {LoginComponent} from './features/auth/components/login/login.component';
 import {authGuard} from './features/auth/guards/auth-guard/auth.guard';
-import {DashboardComponent} from './features/dashboard/dashboard.component';
+import {TakeStockComponent} from './features/stocktaking/components/take-stock/take-stock.component';
+import {ViewStockComponent} from './features/stocktaking/components/view-stock/view-stock.component';
+import {DashboardComponent} from './features/dashboard/components/dashboard/dashboard.component';
 
 export const routes: Routes = [
   // Default route to take the staff member to the dashboard
@@ -21,7 +23,15 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardComponent
-      }
+      },
+      {
+        path: 'stocktaking/take',
+        component: TakeStockComponent
+      },
+      {
+        path: 'stocktaking/view',
+        component: ViewStockComponent
+      },
     ]
   },
 

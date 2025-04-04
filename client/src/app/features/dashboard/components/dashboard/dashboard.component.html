@@ -1,0 +1,9 @@
+<div class="row justify-content-center mt-3">
+  <h2 class="text-center mb-3">Inventory Dashboard</h2>
+
+  <div class="col-md-6 col-lg-5">
+    @for (menuOption of availableMenuOptions; track $index) {
+      <app-dashboard-item [optionData]="menuOption"></app-dashboard-item>
+    }
+  </div>
+</div>

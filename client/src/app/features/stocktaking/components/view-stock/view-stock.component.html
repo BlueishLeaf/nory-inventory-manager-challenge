@@ -1,0 +1,50 @@
+<div class="row justify-content-center mt-3">
+  <h2 class="text-center mb-3">View Current Inventory</h2>
+
+  @if (locationIngredients.length > 0) {
+    <div class="col-md-6 col-lg-5">
+      <div class="mb-3">
+        <label for="searchInput" class="form-label">Search inventory</label>
+        <input
+          type="text"
+          class="form-control"
+          id="searchInput"
+          placeholder="Start typing here..."
+          [(ngModel)]="searchTerm"
+        />
+      </div>
+
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Ingredient</th>
+          <th scope="col">Unit</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Cost</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (locationIngredient of filteredLocationIngredients | slice: (page - 1) * pageSize : page * pageSize; track locationIngredient) {
+            <tr>
+              <td>{{locationIngredient.ingredient.name}}</td>
+              <td>{{locationIngredient.ingredient.unit}}</td>
+              <td>{{locationIngredient.quantity}}</td>
+              <td>€{{locationIngredient.ingredient.cost}}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      <ngb-pagination [(page)]="page"
+                      [pageSize]="pageSize"
+                      [maxSize]="maxDisplayPages"
+                      [ellipses]="true"
+                      [rotate]="true"
+                      [boundaryLinks]="true"
+                      [collectionSize]="filteredLocationIngredients.length"
+      />
+    </div>
+  } @else {
+    <h3 class="text-center mb-3">Loading inventory...</h3>
+  }
+
+</div>
