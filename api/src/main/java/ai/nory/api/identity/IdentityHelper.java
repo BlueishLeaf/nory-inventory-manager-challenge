@@ -1,5 +1,6 @@
 package ai.nory.api.identity;
 
+import ai.nory.api.constant.RoleConstant;
 import ai.nory.api.dto.LocationDto;
 import ai.nory.api.dto.StaffIdentity;
 import ai.nory.api.dto.StaffMemberDto;
@@ -29,6 +30,11 @@ public class IdentityHelper {
 
         LocationDto locationDto = locationService.getLocation(identityHeaders.getLocationId());
         StaffMemberDto staffMemberDto = staffMemberService.getStaffMember(identityHeaders.getStaffMemberId());
+
+        // Ensure staff member has a valid role for this endpoint
+        if (!allowedRoles.contains(staffMemberDto.getRole()) && !allowedRoles.contains(RoleConstant.ROLE_ALL)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Staff member does not have the required role");
+        }
 
         // Ensure staff member belongs to this location
         if (!staffMemberHasLocation(staffMemberDto, locationDto.getId())) {
