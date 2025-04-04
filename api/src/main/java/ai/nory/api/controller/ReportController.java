@@ -1,12 +1,15 @@
 package ai.nory.api.controller;
 
 import ai.nory.api.constant.RoleConstant;
+import ai.nory.api.dto.report.GenerateReportCommand;
 import ai.nory.api.dto.report.InventoryAuditLogDto;
 import ai.nory.api.dto.StaffIdentity;
+import ai.nory.api.dto.report.MonthlySummaryReportDto;
 import ai.nory.api.dto.report.ReportCriteriaDto;
 import ai.nory.api.identity.IdentityHeaders;
 import ai.nory.api.identity.IdentityHelper;
 import ai.nory.api.service.InventoryAuditLogService;
+import ai.nory.api.service.ReportService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,11 +31,20 @@ public class ReportController {
     private final Set<String> allowedRoles = Set.of(RoleConstant.ROLE_MANAGER);
 
     private final InventoryAuditLogService inventoryAuditLogService;
+    private final ReportService reportService;
 
     @PostMapping("/audit-logs")
     public List<InventoryAuditLogDto> fetchAuditLogsForPeriod(@RequestBody @Valid ReportCriteriaDto reportCriteriaDto) {
         StaffIdentity staffIdentity = identityHelper.validateStaffIdentity(identityHeaders, allowedRoles);
 
         return inventoryAuditLogService.getInventoryAuditLogsForPeriod(staffIdentity.location().getId(), reportCriteriaDto.fromDate(), reportCriteriaDto.toDate());
+    }
+
+    @PostMapping("/summary")
+    public MonthlySummaryReportDto fetchSummaryForPeriod(@RequestBody @Valid ReportCriteriaDto reportCriteriaDto) {
+        StaffIdentity staffIdentity = identityHelper.validateStaffIdentity(identityHeaders, allowedRoles);
+
+        GenerateReportCommand generateReportCommand = new GenerateReportCommand(staffIdentity.location(), reportCriteriaDto);
+        return reportService.generateMonthlySummaryReportForPeriod(generateReportCommand);
     }
 }
