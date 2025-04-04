@@ -7,7 +7,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const location_id = localStorage.getItem(StorageConstants.LOCATION_ID_KEY);
 
   // Only add an auth header if the token exists
-  console.info("Checking headers...", staff_id, location_id)
   if (staff_id && location_id) {
     // Clone the request and add the authorization header
     const authReq = req.clone({
