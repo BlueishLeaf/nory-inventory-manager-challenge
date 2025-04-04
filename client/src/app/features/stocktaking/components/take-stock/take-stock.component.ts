@@ -52,7 +52,7 @@ export class TakeStockComponent implements OnInit{
     text$.pipe(
       debounceTime(200),
       distinctUntilChanged(),
-      filter((term) => term.length >= 2),
+      filter((term) => term.length >= 1),
       map((term) => this.locationIngredients.filter((locationIngredient) =>
         new RegExp(term, 'mi').test(locationIngredient.ingredient.name)).slice(0, 10))
     );

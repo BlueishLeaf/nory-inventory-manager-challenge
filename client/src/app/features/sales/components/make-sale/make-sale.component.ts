@@ -55,7 +55,7 @@ export class MakeSaleComponent implements OnInit{
     text$.pipe(
       debounceTime(200),
       distinctUntilChanged(),
-      filter((term) => term.length >= 2),
+      filter((term) => term.length >= 1),
       map((term) => this.menuItems.filter((menuItem) =>
         new RegExp(term, 'mi').test(menuItem.recipeName)).slice(0, 10))
     );
