@@ -1,0 +1,48 @@
+services:
+  backend:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: api
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - ACTIVE_LOCATION_ID=1 # Change this ID to load a different location
+    networks:
+      - app-network
+    depends_on:
+     - db
+
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: client
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  db:
+   image: postgres:latest
+   container_name: postgres-db
+   ports:
+     - "5432:5432"
+   environment:
+     - POSTGRES_USER=dbuserprod
+     - POSTGRES_PASSWORD=dbuserprod
+     - POSTGRES_DB=noryprod
+   volumes:
+     - db-data:/var/lib/postgresql/data
+   networks:
+     - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db-data:
