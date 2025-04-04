@@ -1,0 +1,10 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres-db-dev
+    environment:
+      - POSTGRES_USER=dbuserdev
+      - POSTGRES_PASSWORD=dbuserdev
+      - POSTGRES_DB=norydev
+    ports:
+      - '5432:5432'
