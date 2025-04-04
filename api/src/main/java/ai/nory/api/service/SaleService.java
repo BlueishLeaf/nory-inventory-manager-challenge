@@ -159,6 +159,7 @@ public class SaleService {
             inventoryAuditLog.setQuantityChangeAmount(inventoryAuditLog.getQuantityChangeAmount().add(additionalChangeAmount));
             inventoryAuditLog.setQuantityChangeCost(inventoryAuditLog.getQuantityChangeCost().add(additionalChangeCost));
         } else {
+            // Construct a changelog for this action
             InventoryAuditLog inventoryAuditLog = InventoryAuditLog.builder()
                     .locationId(createSaleCommand.locationDto().getId())
                     .staffMemberId(createSaleCommand.staffMemberDto().getId())

@@ -108,6 +108,7 @@ export class AcceptDeliveryComponent implements OnInit{
       deliveredItems: this.acceptDeliveryForm.controls.deliveredItems.value!
     }
 
+    // Submit the delivery to the API
     this.deliveryApi.createDelivery(createDelivery).subscribe({
       next: (_delivery) => {
         this.formSubmitting = false;

@@ -120,6 +120,7 @@ export class TakeStockComponent implements OnInit{
       stockCorrections: this.createStocktakeForm.controls.stockCorrections.value!
     }
 
+    // Submit the stock corrections to the API
     this.stocktakeApi.createStocktake(createStocktake).subscribe({
       next: (_delivery) => {
         this.formSubmitting = false;

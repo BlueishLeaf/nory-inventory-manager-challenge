@@ -12,6 +12,8 @@ public class IdentityInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        // Intercept the HTTP request and set the incoming identity headers on a POJO that the controllers can easily access
+
         String locationIdHeader = request.getHeader(IdentityConstant.LOCATION_ID_HEADER);
         if (locationIdHeader != null) {
             identityHeaders.setLocationId(Long.valueOf(locationIdHeader));

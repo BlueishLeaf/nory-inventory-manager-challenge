@@ -44,6 +44,7 @@ export class AuthService {
   }
 
   checkAuth(): Observable<StaffIdentity | null> {
+    // Check if user identity is already present, if it is then refresh the store
     const existingStaffId = localStorage.getItem(StorageConstants.STAFF_MEMBER_ID_KEY);
 
     if (!existingStaffId) {

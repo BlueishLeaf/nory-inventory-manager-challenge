@@ -63,6 +63,7 @@ public class DeliveryService {
         createDeliveryCommand.createDeliveryDto().deliveredItems().forEach(deliveredItemDto -> {
             LocationIngredientDto locationIngredient = validateLocationIngredientExists(deliveredItemDto, locationIngredients);
 
+            // Construct a changelog for this action
             BigDecimal quantityChangeCost = locationIngredient.getIngredient().getCost().multiply(deliveredItemDto.quantityDelivered());
             inventoryAuditLogs.add(InventoryAuditLog.builder()
                     .locationId(createDeliveryCommand.locationDto().getId())

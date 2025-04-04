@@ -21,6 +21,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
         return new IdentityInterceptor(identityHeaders());
     }
 
+    // The identity headers are scoped at the request level as each request can have different identity headers
     @Bean
     @Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
     public IdentityHeaders identityHeaders() {

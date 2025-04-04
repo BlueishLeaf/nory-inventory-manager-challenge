@@ -68,6 +68,7 @@ public class StocktakeService {
             BigDecimal absQuantityDifference = quantityDifference.abs();
             BigDecimal changeCost = locationIngredient.getIngredient().getCost().multiply(absQuantityDifference);
 
+            // Construct a changelog for this action
             inventoryAuditLogs.add(InventoryAuditLog.builder()
                     .locationId(createStocktakeCommand.locationDto().getId())
                     .staffMemberId(createStocktakeCommand.staffMemberDto().getId())

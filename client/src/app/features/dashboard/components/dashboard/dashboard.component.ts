@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
   staffMember: StaffMember | undefined;
   availableMenuOptions: DashboardOption[] = [];
 
+  // Dynamically supply the dashboard options based on the staff member's role
   allMenuOptions: DashboardOption[] = [
     {
       route: '/deliveries',

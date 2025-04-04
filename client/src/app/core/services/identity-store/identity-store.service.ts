@@ -5,16 +5,16 @@ import {StaffIdentity} from '../../models/identity/staff-identity';
   providedIn: 'root'
 })
 export class IdentityStoreService {
-  // Create a writable signal with the initial state
+  // Privately accessible signal to manage the state of the user's identity
   private identityState = signal<StaffIdentity | null>(null);
 
-  // Create computed signals for derived state
+  // Helper to see if the user has an identity in the store
   readonly isLoggedIn = computed(() => !!this.identityState());
 
   // Public accessor for the identity state
   readonly identity = this.identityState.asReadonly();
 
-  // Methods to update state
+  // Methods to update state when the user logs in
   login(staffIdentity: StaffIdentity) {
     this.identityState.set(staffIdentity);
   }

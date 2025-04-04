@@ -116,6 +116,7 @@ export class MakeSaleComponent implements OnInit{
       soldItems: this.makeSaleForm.controls.soldItems.value!
     }
 
+    // Submit the sale to the API
     this.saleApi.createSale(createSale).subscribe({
       next: (_sale) => {
         this.formSubmitting = false;
