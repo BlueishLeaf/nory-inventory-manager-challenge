@@ -1,0 +1,43 @@
+<div class="row justify-content-center mt-3">
+  <h2 class="text-center mb-3">Staff Member Login</h2>
+
+  <div class="col-md-6 col-lg-5">
+    <div class="mb-3">
+      <!-- Alert for errors -->
+      @if (errorMessage) {
+        <ngb-alert [type]="'danger'" (closed)="errorMessage = ''">
+          {{ errorMessage }}
+        </ngb-alert>
+      }
+
+      <!-- Login form -->
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <div class="mb-3">
+          <label for="staffMemberIdInput" class="form-label">Staff Member ID</label>
+          <input
+            type="text"
+            id="staffMemberIdInput"
+            class="form-control"
+            placeholder="Enter your staff member ID"
+            [formControl]="loginForm.controls.staffMemberId"
+            [ngClass]="{'is-invalid': loginForm.controls.staffMemberId.invalid && (loginForm.controls.staffMemberId.dirty || loginForm.controls.staffMemberId.touched)}"
+          >
+          <div *ngIf="loginForm.controls.staffMemberId.invalid && (loginForm.controls.staffMemberId.dirty || loginForm.controls.staffMemberId.touched)" class="invalid-feedback">
+            <div *ngIf="loginForm.controls.staffMemberId.errors?.['required']">Staff Member ID is required</div>
+          </div>
+        </div>
+
+        <!-- Form submit button -->
+        <div class="d-grid gap-2">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="loginForm.invalid || formSubmitting">
+            <span *ngIf="formSubmitting" class="spinner-border spinner-border-sm me-2"></span>
+            {{ formSubmitting ? 'Logging in...' : 'Login' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<nav class="navbar bg-primary">
+  <div class="container-fluid">
+    <a routerLink="/" class="navbar-brand text-white">Weird Salads - Staff Portal</a>
+    <div *ngIf="identityStore.isLoggedIn()" class="d-flex">
+      <button *ngIf="identityStore.isLoggedIn()" (click)="onLogout()" class="m-1 btn btn-outline-light">Log out</button>
+    </div>
+  </div>
+</nav>
