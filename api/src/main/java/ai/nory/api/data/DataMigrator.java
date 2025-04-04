@@ -42,7 +42,6 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -72,7 +71,7 @@ public class DataMigrator implements ApplicationListener<ContextRefreshedEvent> 
     public void onApplicationEvent(ContextRefreshedEvent event) {
         log.info("Application initialized. Checking if brand data has been migrated...");
 
-        String locationIdEnv = environment.getProperty("ACTIVE_LOCATION_ID");
+        String locationIdEnv = environment.getProperty(MigrationConstant.LOCATION_ID_ENV_VAR);
         if (locationIdEnv == null) {
             log.info("ACTIVE_LOCATION_ID env variable not provided, skipping migration.");
             return;
@@ -181,18 +180,16 @@ public class DataMigrator implements ApplicationListener<ContextRefreshedEvent> 
         modifierTypeRepository.saveAll(modifierTypes);
 
         List<Modifier> modifiers = new ArrayList<>();
-        modifierTypesMap.forEach((typeId, typeModifierBindings) -> {
-            typeModifierBindings.forEach(modifierBinding ->
-                    modifiers.add(Modifier.builder()
-                            .option(modifierBinding.getOption())
-                            .price(modifierBinding.getPrice())
-                            .modifierType(modifierTypeRepository.getReferenceById(typeId))
-                            .createdBy(MigrationConstant.SYSTEM_AUTHOR)
-                            .createdAt(Instant.now())
-                            .updatedBy(MigrationConstant.SYSTEM_AUTHOR)
-                            .updatedAt(Instant.now())
-                            .build()));
-        });
+        modifierTypesMap.forEach((typeId, typeModifierBindings) -> typeModifierBindings.forEach(modifierBinding ->
+                modifiers.add(Modifier.builder()
+                        .option(modifierBinding.getOption())
+                        .price(modifierBinding.getPrice())
+                        .modifierType(modifierTypeRepository.getReferenceById(typeId))
+                        .createdBy(MigrationConstant.SYSTEM_AUTHOR)
+                        .createdAt(Instant.now())
+                        .updatedBy(MigrationConstant.SYSTEM_AUTHOR)
+                        .updatedAt(Instant.now())
+                        .build())));
         modifierRepository.saveAll(modifiers);
 
         log.info("Successfully persisted modifiers.");
@@ -242,7 +239,7 @@ public class DataMigrator implements ApplicationListener<ContextRefreshedEvent> 
                         .locationIngredients(ingredientBindings.stream()
                                 .map(ingredientBinding -> LocationIngredient.builder()
                                         .key(new LocationIngredientKey(locationBinding.getLocationId(), ingredientBinding.getIngredientId()))
-                                        .quantity(BigDecimal.valueOf(20L)) // Give a starting value of 20 to each item in each location
+                                        .quantity(MigrationConstant.STARTING_QUANTITY) // Give a starting value for each location
                                         .ingredient(ingredientRepository.getReferenceById(ingredientBinding.getIngredientId()))
                                         .createdBy(MigrationConstant.SYSTEM_AUTHOR)
                                         .createdAt(Instant.now())
