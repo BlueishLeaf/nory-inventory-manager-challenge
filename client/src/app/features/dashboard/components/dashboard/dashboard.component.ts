@@ -20,6 +20,11 @@ export class DashboardComponent implements OnInit {
 
   allMenuOptions: DashboardOption[] = [
     {
+      route: '/deliveries',
+      displayText: 'Accept a Delivery',
+      allowedRoles: [RoleConstants.ROLE_CHEF, RoleConstants.ROLE_MANAGER, RoleConstants.ROLE_BACK_HOUSE]
+    },
+    {
       route: '/stocktaking/take',
       displayText: 'Take Stock',
       allowedRoles: [RoleConstants.ROLE_ALL]
@@ -30,14 +35,14 @@ export class DashboardComponent implements OnInit {
       allowedRoles: [RoleConstants.ROLE_ALL]
     },
     {
+      route: '/sales',
+      displayText: 'Process a Sale',
+      allowedRoles: [RoleConstants.ROLE_MANAGER, RoleConstants.ROLE_FRONT_HOUSE]
+    },
+    {
       route: '/reporting',
       displayText: 'View Reporting',
       allowedRoles: [RoleConstants.ROLE_MANAGER]
-    },
-    {
-      route: '/deliveries',
-      displayText: 'Accept a Delivery',
-      allowedRoles: [RoleConstants.ROLE_MANAGER, RoleConstants.ROLE_BACK_HOUSE, RoleConstants.ROLE_CHEF]
     }
   ];
 

@@ -6,6 +6,7 @@ import {ViewStockComponent} from './features/stocktaking/components/view-stock/v
 import {DashboardComponent} from './features/dashboard/components/dashboard/dashboard.component';
 import {ViewReportComponent} from './features/reporting/components/view-report/view-report.component';
 import {AcceptDeliveryComponent} from './features/deliveries/components/accept-delivery/accept-delivery.component';
+import {MakeSaleComponent} from './features/sales/components/make-sale/make-sale.component';
 
 export const routes: Routes = [
   // Default route to take the staff member to the dashboard
@@ -41,6 +42,10 @@ export const routes: Routes = [
       {
         path: 'deliveries',
         component: AcceptDeliveryComponent
+      },
+      {
+        path: 'sales',
+        component: MakeSaleComponent
       }
     ]
   },

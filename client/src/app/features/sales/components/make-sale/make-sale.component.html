@@ -1,0 +1,115 @@
+<div class="row justify-content-center mt-3">
+  <h2 class="text-center mb-3">Process new Sale</h2>
+
+  <div class="col-md-6 col-lg-5">
+    <form [formGroup]="addMenuItemForm" (ngSubmit)="addSoldItemToSale()">
+      <div class="mb-3">
+
+        <!-- Alert for success -->
+        @if (successMessage) {
+          <ngb-alert [type]="'success'" (closed)="successMessage = ''">
+            {{ successMessage }}
+          </ngb-alert>
+        }
+
+        <!-- Alert for errors -->
+        @if (errorMessage) {
+          <ngb-alert [type]="'danger'" (closed)="errorMessage = ''">
+            {{ errorMessage }}
+          </ngb-alert>
+        }
+
+        <label for="menuItemInput" class="form-label">Search for a Menu Item</label>
+        <input
+          id="menuItemInput"
+          type="text"
+          class="form-control"
+          placeholder="Start typing the name of a menu item"
+          [ngClass]="{'is-invalid': addMenuItemForm.controls.selectedMenuItem.invalid && (addMenuItemForm.controls.selectedMenuItem.dirty || addMenuItemForm.controls.selectedMenuItem.touched)}"
+          [formControl]="addMenuItemForm.controls.selectedMenuItem"
+          [ngbTypeahead]="search"
+          [inputFormatter]="formatter"
+          [resultFormatter]="formatter"
+          [editable]="false"
+        />
+        <div *ngIf="addMenuItemForm.controls.selectedMenuItem.invalid && (addMenuItemForm.controls.selectedMenuItem.dirty || addMenuItemForm.controls.selectedMenuItem.touched)" class="invalid-feedback">
+          <div *ngIf="addMenuItemForm.controls.selectedMenuItem.errors?.['required']">You must select a menu item</div>
+        </div>
+      </div>
+
+      <!-- Checkboxes for modifier selection -->
+<!--      @if () {-->
+<!--        <div class="mb-3">-->
+<!--          @for (modifierControl of addMenuItemForm.controls.modifiers) {-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" value="" id="checkDefault">-->
+<!--              <label class="form-check-label" for="checkDefault">-->
+<!--                Default checkbox-->
+<!--              </label>-->
+<!--            </div>-->
+<!--          }-->
+<!--        </div>-->
+<!--      }-->
+
+      <div class="mb-3">
+        <label for="quantityInput" class="form-label">Quantity Ordered</label>
+        <input
+          type="number"
+          class="form-control"
+          id="quantityInput"
+          placeholder="0"
+          [ngClass]="{'is-invalid': addMenuItemForm.controls.quantityOrdered.invalid && (addMenuItemForm.controls.quantityOrdered.dirty || addMenuItemForm.controls.quantityOrdered.touched)}"
+          [formControl]="addMenuItemForm.controls.quantityOrdered"
+        />
+        <div *ngIf="addMenuItemForm.controls.quantityOrdered && (addMenuItemForm.controls.quantityOrdered.dirty || addMenuItemForm.controls.quantityOrdered.touched)" class="invalid-feedback">
+          <div *ngIf="addMenuItemForm.controls.quantityOrdered.errors?.['required']">Quantity ordered is required</div>
+        </div>
+      </div>
+      <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-primary" [disabled]="addMenuItemForm.invalid">Add to Sale</button>
+      </div>
+    </form>
+
+    <hr>
+
+    @if (makeSaleForm.valid) {
+      <h3 class="text-center">Items from this sale</h3>
+      <form [formGroup]="makeSaleForm" (ngSubmit)="makeSale()">
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">Menu</th>
+            <th scope="col">Mods</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+            @for (soldItem of makeSaleForm.controls.soldItems.value; track $index) {
+              <tr>
+                <td>{{soldItem.menuItem.recipeName}}</td>
+<!--                <td>{{soldItem.modifiers.join(', ') ?? 'N/A'}}</td>-->
+                <td>N/A</td>
+                <td>{{soldItem.quantity}}</td>
+                <td><button type="button" class="btn btn-outline-danger" (click)="removeSoldItem(soldItem)">Remove</button></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+
+        <!-- Form submit button -->
+        <div class="d-grid gap-2">
+          <button
+            type="submit"
+            class="btn btn-success"
+            [disabled]="makeSaleForm.invalid || formSubmitting">
+            <span *ngIf="formSubmitting" class="spinner-border spinner-border-sm me-2"></span>
+            {{ formSubmitting ? 'Processing Sale...' : 'Process Sale' }}
+          </button>
+        </div>
+      </form>
+    } @else {
+      <h3 class="text-center">Add items to process this Sale</h3>
+    }
+  </div>
+</div>
