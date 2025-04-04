@@ -1,5 +1,6 @@
 package ai.nory.api.identity;
 
+import ai.nory.api.constant.IdentityConstant;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -11,12 +12,12 @@ public class IdentityInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        String locationIdHeader = request.getHeader("location_id");
+        String locationIdHeader = request.getHeader(IdentityConstant.LOCATION_ID_HEADER);
         if (locationIdHeader != null) {
             identityHeaders.setLocationId(Long.valueOf(locationIdHeader));
         }
 
-        String staffMemberIdHeader = request.getHeader("staff_member_id");
+        String staffMemberIdHeader = request.getHeader(IdentityConstant.STAFF_MEMBER_ID_HEADER);
         if (staffMemberIdHeader != null) {
             identityHeaders.setStaffMemberId(Long.valueOf(staffMemberIdHeader));
         }
